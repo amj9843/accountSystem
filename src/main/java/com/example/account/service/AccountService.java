@@ -6,6 +6,7 @@ import com.example.account.dto.AccountDto;
 import com.example.account.exception.AccountException;
 import com.example.account.repository.AccountRepository;
 import com.example.account.repository.AccountUserRepository;
+import com.example.account.type.AccountStatus;
 import com.example.account.type.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -55,8 +56,10 @@ public class AccountService {
 
         validateDeleteAccount(accountUser, account);
 
-        account.setAccountStatus(UNREGISTERED);
+        account.setAccountStatus(AccountStatus.UNREGISTERED);
         account.setUnRegisteredAt(LocalDateTime.now());
+
+        accountRepository.save(account);
 
         return AccountDto.fromEntity(account);
     }
